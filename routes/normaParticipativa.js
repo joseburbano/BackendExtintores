@@ -10,7 +10,7 @@ const md_upload_foto_participacion = multipart({
 
 const api = express.Router();
 
-const participacionControllers = require("../Controllers/participacionControllers");
+const participacionControllers = require("../Controllers/participationControllers/participacionControllers");
 
 //NORMA DE PARTICIPACION
 

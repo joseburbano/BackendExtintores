@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt-nodejs");
 const moment = require("moment");
-const User = require("../models/Users");
-const jwt = require("../services/jwt");
+const User = require("../../models/Users");
+const jwt = require("../../services/jwt");
 
 //Cuando se crea un usuario nuevo OJO desde usuario no legueado LO DEJO ESCRITO POR SI LO NECESITA ALGUN DIA
 exports.signUp = (req, res) => {

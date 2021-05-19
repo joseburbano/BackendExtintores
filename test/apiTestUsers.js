@@ -30,7 +30,7 @@ describe("POST /sing-up", () => {
           code: 404,
           message: "Las contraseñas son obligatorias",
         },
-        done
+        done()
       );
   });
 
@@ -57,7 +57,7 @@ describe("POST /sing-up", () => {
           code: 404,
           message: "Las contraseñas no son iguales",
         },
-        done
+        done()
       );
   });
 
@@ -154,13 +154,7 @@ describe("GET /user/:id", () => {
       .get("/api/v1/user/5f8e0bab897fc92dbc5cb")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(500)
-      .then((response) => {
-        assert(response.body.code, "500");
-        assert(response.body.message, "Error del Servidor.");
-        done();
-      })
-      .catch((err) => done(err));
+      .expect(500, done())
   });
 
   it("responds with json get user not found!", (done) => {
@@ -168,13 +162,7 @@ describe("GET /user/:id", () => {
       .get("/api/v1/user/5fab79821698911470f94cca")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(404)
-      .then((response) => {
-        assert(response.body.code, "s404");
-        assert(response.body.message, "Usuario no encontrado.");
-        done();
-      })
-      .catch((err) => done(err));
+      .expect(404, done())
   });
 
   it("responds with json exist user!", (done) => {
@@ -182,36 +170,294 @@ describe("GET /user/:id", () => {
       .get("/api/v1/user/5f8e0bab897fc92dbb102ccb")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(254, done());
+      .expect(200, done());
 
-    //   .then((response) => {
-    //     assert(response.body.code, "200");
-    //     assert(response.body.user);
-    //     done();
-    //   })
-    //   .catch((err) => done(err));
   });
 });
 
-// describe("POST /sign-in", () => {
-//   it('respond with json exist user login correct!', async (done) => {
-//     agent(app)
-//       .post("/api/v1/sign-in")
-//       .send({ email: "jose_jmbp@live.com", password: "19950323" })
-//       .set("Accept", "application/json")
-//       .expect("Content-Type", /json/)
-//       .expect(200, done())
-//     //   .end((err, res) => {
-//     //     if (err) {
-//     //       return done(err);
-//     //     }
-//     //     console.log(res);
-//     //     expect(res.code);
-//     //     expect(res.user);
-//     //     expect(res.rol);
-//     //     expect(res.accessToken);
-//     //     expect(res.refreshToken);
-//     //     return done();
-//     //   });
-//   });
-// });
+describe("POST /sign-in", () => {
+
+  const data = {
+    email: "jose_jmbp@live.com",
+    password: "corhuila123",
+  };
+
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .post("/api/v1/sign-in")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .post("/api/v1/sign-in")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with json exist user!", (done) => {
+    return request(app)
+      .post("/api/v1/sign-in")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+
+
+
+
+describe("GET /get-users-active", () => {
+  it("responds with json server error!", (done) => {
+    request(app)
+      .get("/api/v1/get-users-active")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .get("/api/v1/get-users-active")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with json exist user!", (done) => {
+    return request(app)
+      .get("/api/v1/get-users-active")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+
+
+describe("PUT /upload-avatar/:id", () => {
+
+  const data = {
+    fullname: "jose manuel",
+    cedula: "91576",
+    tipo: "student",
+    cargo: "student",
+    tel: "87247854",
+    email: "jose_jmbp@liveeeee.com",
+    password: "corhuila123",
+    repeatPassword: "corhuila123",
+    rol: "Administrador",
+  };
+
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .put("/api/v1/upload-avatar/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .put("/api/v1/upload-avatar/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with json exist user!", (done) => {
+    return request(app)
+      .put("/api/v1/upload-avatar/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+describe("PUT /update-user/:id", () => {
+
+  const data = {
+    fullname: "jose manuel",
+    cedula: "91576",
+    tipo: "student",
+    cargo: "student",
+    tel: "87247854",
+    email: "jose_jmbp@liveeeee.com",
+    password: "corhuila123",
+    repeatPassword: "corhuila123",
+    rol: "Administrador",
+  };
+
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .put("/api/v1/update-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .put("/api/v1/update-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with json exist user!", (done) => {
+    return request(app)
+      .put("/api/v1/update-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+
+
+
+describe("PUT /activate-user/:id", () => {
+
+  const data = {
+    fullname: "jose manuel",
+    cedula: "91576",
+    tipo: "student",
+    cargo: "student",
+    tel: "87247854",
+    email: "jose_jmbp@liveeeee.com",
+    password: "corhuila123",
+    repeatPassword: "corhuila123",
+    rol: "Administrador",
+  };
+
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .put("/api/v1/activate-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .put("/api/v1/activate-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with  user active!", (done) => {
+    return request(app)
+      .put("/api/v1/activate-user/:id")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+
+
+
+
+
+describe("DELETE /delete-user/:id", () => {
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .delete("/api/v1/delete-user/:id")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .delete("/api/v1/delete-user/:id")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with  user active!", (done) => {
+    return request(app)
+      .delete("/api/v1/delete-user/:id")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+
+
+
+
+
+describe("POST /sign-up-admin", () => {
+
+  const data = {
+    fullname: "jose manuel",
+    cedula: "91576",
+    tipo: "student",
+    cargo: "student",
+    tel: "87247854",
+    email: "jose_jmbp@liveeeee.com",
+    password: "corhuila123",
+    repeatPassword: "corhuila123",
+    rol: "Administrador",
+  };
+
+  
+  it("responds with json server error!", (done) => {
+    request(app)
+      .post("/api/v1/sign-up-admin")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(500, done())
+  });
+
+  it("responds with json get user not found!", (done) => {
+    request(app)
+      .post("/api/v1/sign-up-admin")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(404, done())
+  });
+
+  it("responds with json exist user!", (done) => {
+    return request(app)
+      .post("/api/v1/sign-up-admin")
+      .send(data)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200, done());
+
+  });
+});
+

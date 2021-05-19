@@ -14,6 +14,7 @@ const extintorRoutes = require("./routes/extintor");
 const normaParticipacionRoutes = require("./routes/normaParticipativa");
 const tokenRoutes = require("./routes/token");
 const inicioRoutes = require("./routes/inicio");
+const menuRoutes = require("./routes/menu");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -38,5 +39,6 @@ app.use(`/api/${API_VERSION}`, extintorRoutes);
 app.use(`/api/${API_VERSION}`, normaParticipacionRoutes);
 app.use(`/api/${API_VERSION}`, tokenRoutes);
 app.use(`/api/${API_VERSION}`, inicioRoutes);
+app.use(`/api/${API_VERSION}`, menuRoutes);
 
 module.exports = app;

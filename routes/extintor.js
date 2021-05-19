@@ -8,7 +8,7 @@ const md_upload_foto_extintores = multipart({
   uploadDir: "./uploads/extintores",
 });
 
-const elementoControllers = require("../Controllers/elementoControllers");
+const elementoControllers = require("../Controllers/elementsControllers/elementoControllers");
 
 const api = express.Router();
 

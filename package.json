@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "mocha test/apiUsersTest.js  --exit",
+    "test": "mocha test/apiTestInicio.js test/apiTestCovid.js test/apiTestToken.js test/apiTestUsers.js test/apiTestParticipacion.js  --exit",
     "start": "node index.js"
   },
   "author": "nicolas bedoya y jose manuel burbano",
@@ -36,3 +36,4 @@
     "node": "15.11.0"
   }
 }
+

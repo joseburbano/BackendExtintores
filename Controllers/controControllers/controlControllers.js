@@ -1,7 +1,7 @@
-const extintor = require("../models/Elemento");
-const usuario = require("../models/Users");
-const Covid = require("../models/Covid");
-const Participacion = require("../models/Participacion");
+const extintor = require("../../models/Elemento");
+const usuario = require("../../models/Users");
+const Covid = require("../../models/Covid");
+const Participacion = require("../../models/Participacion");
 const moment = require("moment");
 
 //contar datos de inicio

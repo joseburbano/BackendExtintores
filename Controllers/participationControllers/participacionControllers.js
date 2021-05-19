@@ -1,5 +1,5 @@
-const Participacion = require("../models/Participacion");
-const User = require("../models/Users");
+const Participacion = require("../../models/Participacion");
+const User = require("../../models/Users");
 const moment = require("moment");
 //slug para y shor id generar url
 const slug = require("slug");

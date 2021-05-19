@@ -1,7 +1,7 @@
-const Menu = require("../models/Menu");
-const Roles = require("../models/Role");
-const Permisos = require("../models/Permissions");
-const { populate } = require("../models/Menu");
+const Menu = require("../../models/Menu");
+const Roles = require("../../models/Role");
+const Permisos = require("../../models/Permissions");
+const { populate } = require("../../models/Menu");
 const { query } = require("express");
 
 exports.addPermisos = async (req, res) => {

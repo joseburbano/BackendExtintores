@@ -10,7 +10,7 @@ const md_upload_avatar = multipart({ uploadDir: "./uploads/avatar" });
 const api = express.Router();
 
 //importamos controlladores
-const userControllers = require("../Controllers/userControllers");
+const userControllers = require("../Controllers/usersConstrollers/userControllers");
 
 
  //RUTAS DE USUARIO
