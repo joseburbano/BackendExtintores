@@ -1,5 +1,5 @@
 {
-  "name": "apiextintores",
+  "name": "backend",
   "version": "1.0.0",
   "description": "backend de consulta para app",
   "main": "index.js",
@@ -36,4 +36,3 @@
     "node": "15.11.0"
   }
 }
-
