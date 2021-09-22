@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const app = require("./app");
+const app = require("./bin/app");
 const port = process.env.PORT || 4000;
-const { API_VERSION, DB_URL, IP_SERVER } = require("./config");
+const { API_VERSION, DB_URL, IP_SERVER } = require("./config/defaul");
 
 mongoose.connect(
   DB_URL,
@@ -28,5 +28,5 @@ mongoose.connect(
         console.log("Servidor Funcionando");
       });
     }
-  }
+  },
 );
