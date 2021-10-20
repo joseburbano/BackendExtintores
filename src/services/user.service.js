@@ -11,22 +11,13 @@ class UserService extends BaseService {
   }
 
   async getUserByUsername(email, cedula) {
-    if (!cedula) {
+    if (!email || !cedula) {
       const error = new Error();
       error.code = 401;
       error.status = 401;
-      error.message = "the ID field is a requirement.";
+      error.message = "The ID adn email field is a requirement.";
       throw error;
     }
-
-    if (!email) {
-      const error = new Error();
-      error.code = 401;
-      error.status = 401;
-      error.message = "the email field is a requirement.";
-      throw error;
-    }
-
     return await _userRepository.getUserByUsername(email, cedula);
   }
 
@@ -105,7 +96,7 @@ class UserService extends BaseService {
       throw error;
     }
 
-    const photo = fs.exists(filePath, (exists) => {
+    fs.existsSync(filePath, (exists) => {
       if (!exists) {
         const error = new Error();
         error.code = 401;
@@ -113,11 +104,8 @@ class UserService extends BaseService {
         error.message = "The avatar you are looking for does not exist.";
         throw error;
       }
-
-      return filePath;
     });
-
-    return await path.resolve(photo);
+    return await path.resolve(filePath);
   }
 
   //actualizar datos

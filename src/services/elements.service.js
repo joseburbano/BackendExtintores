@@ -141,7 +141,7 @@ class ElementsService extends BaseService {
 
   //Enviar foto al frontend
   async getPhoto(filePath) {
-    const photo = fs.exists(filePath, (exists) => {
+    fs.existsSync(filePath, (exists) => {
       if (!exists) {
         const error = new Error();
         error.code = 404;
@@ -149,9 +149,8 @@ class ElementsService extends BaseService {
         error.message = "The photo you are looking for does not exist.";
         throw error;
       }
-      return filePath;
     });
-    return await path.resolve(photo);
+    return await path.resolve(filePath);
   }
 
   //enviar todos los elementos

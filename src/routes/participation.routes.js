@@ -58,7 +58,7 @@ module.exports = function ({ ParticipationController }) {
   //En listar todo los participacion
   router.get(
     "/get-participation",
-    [ParseIntMiddleware, CacheMiddleware(CACHE_TIME.ONE_HOUR)],
+    [ParseIntMiddleware],
     ParticipationController.getParticipation,
   );
 
@@ -67,7 +67,7 @@ module.exports = function ({ ParticipationController }) {
 
   //informe de participacion
   router.get(
-    "/informe-participacion",
+    "/report-participation",
     [AuthMiddleware, CacheMiddleware(CACHE_TIME.ONE_HOUR)],
     ParticipationController.exportShare,
   );

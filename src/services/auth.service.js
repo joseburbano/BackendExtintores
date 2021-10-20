@@ -127,7 +127,7 @@ class AuthService {
 
     const token = generateToken(userToEncode);
 
-    return { token, user: userExist };
+    return { token, user: userToEncode };
   }
 }
 

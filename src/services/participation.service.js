@@ -158,7 +158,7 @@ class ParticipationService extends BaseService {
       throw error;
     }
 
-    const photo = fs.exists(filePath, (exists) => {
+    fs.existsSyncs(filePath, (exists) => {
       if (!exists) {
         const error = new Error();
         error.code = 404;
@@ -166,11 +166,9 @@ class ParticipationService extends BaseService {
         error.message = "The avatar you are looking for does not exist.";
         throw error;
       }
-
-      return filePath;
     });
 
-    return await path.resolve(photo);
+    return await path.resolve(filePath);
   }
 
   //Enviar un foto al registro de normativa de participacion
@@ -185,7 +183,7 @@ class ParticipationService extends BaseService {
       throw error;
     }
 
-    const photo = fs.exists(filePath, (exists) => {
+    fs.existsSync(filePath, (exists) => {
       if (!exists) {
         const error = new Error();
         error.code = 404;
@@ -193,11 +191,9 @@ class ParticipationService extends BaseService {
         error.message = "The photo you are looking for does not exist.";
         throw error;
       }
-
-      return filePath;
     });
 
-    return await path.resolve(photo);
+    return await path.resolve(filePath);
   }
 
   //enviar todos los registro de normativa de participacion
