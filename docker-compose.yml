@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    depends_on: -mongo
+    environment:
+      - DB_MONGO_URL=mongodb://mongo:27017/test
+      - PORT=4000
+      - APPLICATION_NAME=FIRE EXTINGUISHERS REST API
+      - API_VERSION=v1
+      - IP_SERVER=192.168.20.46
+      - API_API=api
+      - JWT_SECRET=kjdbfndDedsFJ542dsAD1289WHsdmnsLKSAInGHGHJjVchi56846543ñpyftyj675465oi
+      - CACHE_KEY=myStrongPaswwore
+      - SWAGGER_PATH=swaggerPROD
+    ports: -"4000:4000"
+
+  mongo:
+    image: mongo

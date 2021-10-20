@@ -1,32 +1,27 @@
+const container = require("./src/startup/container");
+const server = container.resolve("app");
+//extraemos variables
+const { DB_MONGO_URL } = container.resolve("config");
+
+//inicializamos mongo
 const mongoose = require("mongoose");
-const app = require("./bin/app");
-const port = process.env.PORT || 4000;
-const { API_VERSION, DB_URL, IP_SERVER } = require("./config/defaul");
+mongoose.set("useCreateIndex", true);
 
 mongoose.connect(
-  DB_URL,
+  DB_MONGO_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-    useCreateIndex: true,
     useNewUrlParser: true,
   },
   (err, res) => {
     if (err) {
-      console.log("Error en la conexion en la base de datos");
+      console.log("Database connection error.");
       throw err;
     } else {
-      console.log("La conexión a la base de datos es correcta.");
-
-      app.listen(port, () => {
-        console.log("#####");
-        console.log("API REST EXTINTORES");
-        console.log("#####");
-        console.log("#####");
-        console.log(`http://${IP_SERVER}:${port}/api/${API_VERSION}/`);
-        console.log("Servidor Funcionando");
-      });
+      console.log("The connection to the database is correct.");
+      server.start();
     }
   },
 );
