@@ -18,14 +18,19 @@ class UserRepository extends BaseRepository {
   //usuarios activo o inactivos
   async getUsersActive(pageSize = 5, pageNum = 1, active) {
     const skips = pageSize * (pageNum - 1);
-    return await this.model
+    const doc = await _user
       .find({ active: active })
       .skip(skips)
-      .limit(pageSize);
+      .limit(pageSize)
+      .exec();
+
+    const user = await _user.countDocuments({ active: active }).exec();
+
+    return [doc, user];
   }
   //actualizar foto de avatar
-  async uploadAvatar(userId, user) {
-    return await _user.findByIdAndUpdate({ _id: userId }, user);
+  async uploadAvatar(userId, fileNames) {
+    await _user.findByIdAndUpdate(userId, { avatar: fileNames }).exec();
   }
 
   //activar usuario

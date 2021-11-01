@@ -16,7 +16,7 @@ module.exports = function ({ UserController }) {
   //obtener todos los usuarios activados
   router.get(
     "/users-active",
-    [AuthMiddleware, ParseIntMiddleware],
+    [ParseIntMiddleware],
     UserController.getUsersActive,
   );
 

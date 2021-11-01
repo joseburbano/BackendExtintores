@@ -35,7 +35,16 @@ class UserController {
         if (!users) {
           return res.json({ code: 401, message: "No users found." });
         } else {
-          return res.json({ code: 200, users: users });
+          const result = users[1] / pageSize;
+          return res.json({
+            code: 200,
+            users: users[0],
+            total: {
+              totalPage: Math.round(result),
+              pageNum: pageNum,
+              pageSize: pageSize,
+            },
+          });
         }
       });
   }
@@ -44,11 +53,13 @@ class UserController {
   async uploadAvatar(req, res) {
     const { userId } = req.params;
     let filePath = req.files;
-    await _userService.uploadAvatar(userId, filePath).then((fileNames) => {
-      if (!fileNames) {
+    await _userService.uploadAvatar(userId, filePath).then((photo) => {
+      if (!photo) {
         return res.json({ code: 401, message: "No users found." });
+      } else if (photo) {
+        return res.json({ code: 200, avatarName: photo });
       } else {
-        return res.json({ code: 200, avatarName: fileNames });
+        return res.status(500).json({ code: 500, message: "Err Server." });
       }
     });
   }
@@ -88,7 +99,6 @@ class UserController {
   async activateUser(req, res) {
     let { active } = req.body;
     const { userId } = req.params;
-
     await _userService.activateUser(active, userId).then((user) => {
       if (!user) {
         return res.status(401).json({ code: 401, message: "No users found." });

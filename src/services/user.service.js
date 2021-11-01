@@ -55,7 +55,7 @@ class UserService extends BaseService {
       throw error;
     }
 
-    const currentEntity = await this.repository.get(userId);
+    const currentEntity = await _userRepository.get(userId);
 
     if (!currentEntity) {
       const error = new Error();
@@ -64,8 +64,6 @@ class UserService extends BaseService {
       error.message = "entity does not found";
       throw error;
     }
-
-    let user = currentEntity;
 
     let filePathh = filePath.avatar.path;
     let fileSplit = filePathh.split("/");
@@ -82,9 +80,7 @@ class UserService extends BaseService {
       throw error;
     }
 
-    user.avatar = fileNames;
-
-    return await _userRepository.uploadAvatar(userId, user);
+    return await _userRepository.uploadAvatar(userId, fileNames);
   }
   //aca extraemos la imagen
   async getAvatar(filePath) {
@@ -132,20 +128,13 @@ class UserService extends BaseService {
 
   //activr usuario
   async activateUser(active, userId) {
-    if (!active) {
-      const error = new Error();
-      error.code = 400;
-      error.status = 400;
-      error.message = "data must be sent to updatet";
-      throw error;
-    }
-    if (!userId) {
-      const error = new Error();
-      error.code = 400;
-      error.status = 400;
-      error.message = "id must be sent";
-      throw error;
-    }
+    // if (!active || !userId) {
+    //   const error = new Error();
+    //   error.code = 400;
+    //   error.status = 400;
+    //   error.message = "Data and Id must be sent to updatet.";
+    //   throw error;
+    // }
 
     return await _userRepository.activateUser(userId, active);
   }

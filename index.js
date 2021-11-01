@@ -5,14 +5,12 @@ const { DB_MONGO_URL } = container.resolve("config");
 
 //inicializamos mongo
 const mongoose = require("mongoose");
-mongoose.set("useCreateIndex", true);
 
 mongoose.connect(
   DB_MONGO_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
     useNewUrlParser: true,
   },
   (err, res) => {
