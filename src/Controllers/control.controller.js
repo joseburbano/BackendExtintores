@@ -8,7 +8,6 @@ class ControlController {
   //agregar permisos
   async controlPanelData(req, res) {
     const { fecha } = req.params;
-
     await _controlService.controlPanelData(fecha).then((resul) => {
       if (!resul) {
         return res.json({

@@ -32,7 +32,10 @@ class ControlService extends BaseService {
     const currentElement = await _controlRepository.countElement();
     const numberOfElements = currentElement.length;
 
-    if (!currentElement || !numberOfElements) {
+    if (
+      (!currentElement && !currentElement == 0) ||
+      (!numberOfElements && !numberOfElements == 0)
+    ) {
       const error = new Error();
       error.status = 404;
       error.message = "No item or extinguisher found.";
@@ -42,7 +45,7 @@ class ControlService extends BaseService {
     const currentElementWel = await _controlRepository.stateElementWell();
     const currentElementWell = currentElementWel.length;
 
-    if (!currentElementWell) {
+    if (!currentElementWell && !currentElementWell == 0) {
       const error = new Error();
       error.status = 404;
       error.message = "No element or extinguisher found in good condition.";
@@ -52,7 +55,7 @@ class ControlService extends BaseService {
     const currentElementBa = await _controlRepository.stateElementBad();
     const currentElementBad = currentElementBa.length;
 
-    if (!currentElementBad) {
+    if (!currentElementBad && !currentElementBad == 0) {
       const error = new Error();
       error.status = 404;
       error.message = "No element or extinguisher in bad condition was found.";
@@ -92,7 +95,7 @@ class ControlService extends BaseService {
     const currentCountPartic = await _controlRepository.countParticiBab();
     const currentCountPartici = currentCountPartic.length;
 
-    if (currentCountPartici) {
+    if (currentCountPartici && currentCountPartici == 0) {
       const error = new Error();
       error.status = 404;
       error.message = "No participation record found.";
@@ -102,7 +105,7 @@ class ControlService extends BaseService {
     const currentCovidPlas = await _controlRepository.countCovidTrein();
     const currentCovidPlass = currentCovidPlas.length;
 
-    if (!currentCovidPlass) {
+    if (!currentCovidPlass && !currentCovidPlass == 0) {
       const error = new Error();
       error.status = 404;
       error.message = "No covid record was found.";
@@ -121,7 +124,7 @@ class ControlService extends BaseService {
       currentCovidPlass,
     };
 
-    return await datos;
+    return datos;
   }
 }
 

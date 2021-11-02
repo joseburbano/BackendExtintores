@@ -39,6 +39,7 @@ class RoleRepository extends BaseRepository {
   //elminar dato
   async deleteRol(id) {
     await this.model.findByIdAndRemove(id);
+    return true;
   }
 
   //traer datos de role con permisos

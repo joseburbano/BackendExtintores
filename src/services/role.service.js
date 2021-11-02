@@ -66,7 +66,7 @@ class RoleService extends BaseService {
 
   //eliminar rol
   async deleteRolPermi(id) {
-    if (id) {
+    if (!id) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
