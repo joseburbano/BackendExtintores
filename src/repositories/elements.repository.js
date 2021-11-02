@@ -81,6 +81,13 @@ class ElementsRepository extends BaseRepository {
     return [doc, elements, pageSize, pageNum];
   }
 
+  //actualizar foto de avatar
+  async uploadAvatarElement(userId, fileNames) {
+    return await _elements
+      .findByIdAndUpdate(userId, { foto: fileNames })
+      .exec();
+  }
+
   //buscar si nombre de permiso ya existe
   async getUrl(url) {
     return await _elements.findOne({ url: url }).exec();

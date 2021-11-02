@@ -9,7 +9,7 @@ class ElementsController {
   async addElements(req, res) {
     const data = req.body;
     const { id } = req.params;
-
+    console.log(id);
     await _elementsService.addElements(data, id).then((resul) => {
       if (!resul) {
         return res.json({ code: 401, message: "Failed to add new item." });
@@ -228,7 +228,7 @@ class ElementsController {
 
   //Enviar datos de elementos informe
   async exportItems(req, res) {
-    await _elementsService.exportItems(id).then((resul) => {
+    await _elementsService.exportItems().then((resul) => {
       if (!resul) {
         return res.json({ code: 401, message: "No item was found." });
       } else {

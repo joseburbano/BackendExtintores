@@ -15,16 +15,13 @@ class ElementsService extends BaseService {
   }
 
   async addElements(data, id) {
-    Url = data.placa;
-    const url = slug(Url).toLowerCase();
+    const url = slug(data.placa).toLowerCase();
     data.url = `${url}-${shortid.generate()}`;
-    active = data.active;
-    active = true;
-    data.active = active;
+    data.active = true;
 
     const currentEntity = await _elementsRepository.getIdUser(id);
 
-    if (currentEntity) {
+    if (!currentEntity) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -62,7 +59,7 @@ class ElementsService extends BaseService {
   async deleteElements(id) {
     const currentEntity = await _elementsRepository.get(id);
 
-    if (currentEntity) {
+    if (!currentEntity) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -111,7 +108,7 @@ class ElementsService extends BaseService {
 
     const currentEntity = await _elementsRepository.get(id);
 
-    if (currentEntity) {
+    if (!currentEntity) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -134,9 +131,7 @@ class ElementsService extends BaseService {
       throw error;
     }
 
-    currentEntity.foto = fileNames;
-
-    return await _elementsRepository.update(id, currentEntity);
+    return await _elementsRepository.uploadAvatarElement(id, fileNames);
   }
 
   //Enviar foto al frontend
