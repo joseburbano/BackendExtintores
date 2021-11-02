@@ -155,7 +155,7 @@ class ElementsService extends BaseService {
 
   //enviar todos los elementos
   async getElements(pageSize, pageNum) {
-    return await _elementsRepository.getAll(pageSize, pageNum);
+    return await _elementsRepository.getAllElements(pageSize, pageNum);
   }
 
   //enviar un solo elemento

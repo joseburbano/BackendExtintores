@@ -22,19 +22,39 @@ class ElementsRepository extends BaseRepository {
     });
   }
 
+  //traer datos de elementos
+  async getAllElements(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+    const doc = await _elements.find().skip(skips).limit(pageSize).exec();
+    const elements = await _elements.countDocuments().exec();
+
+    return [doc, elements, pageSize, pageNum];
+  }
+
   //traer datos  por sedes de elementos
   async getAllElementsCampus(campus, pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);
-    return await _elements.find({ sede: campus }).skip(skips).limit(pageSize);
+    const doc = await _elements
+      .find({ sede: campus })
+      .skip(skips)
+      .limit(pageSize);
+    const elements = await _elements.countDocuments({ sede: campus }).exec();
+
+    return [doc, elements, pageSize, pageNum];
   }
 
   //traer datos  por bloque de elementos
   async getElementsQueryBlock(campus, block, pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);
-    return await _elements
+    const doc = await _elements
       .find({ sede: campus, ubicacionBloque: block })
       .skip(skips)
       .limit(pageSize);
+    const elements = await _elements
+      .countDocuments({ sede: campus, ubicacionBloque: block })
+      .exec();
+
+    return [doc, elements, pageSize, pageNum];
   }
 
   //traer datos  por piso de elementos
@@ -46,10 +66,19 @@ class ElementsRepository extends BaseRepository {
     pageNum = 1,
   ) {
     const skips = pageSize * (pageNum - 1);
-    return await _elements
+    const doc = await _elements
       .find({ sede: campus, ubicacionBloque: block, ubicacionPiso: flat })
       .skip(skips)
       .limit(pageSize);
+    const elements = await _elements
+      .countDocuments({
+        sede: campus,
+        ubicacionBloque: block,
+        ubicacionPiso: flat,
+      })
+      .exec();
+
+    return [doc, elements, pageSize, pageNum];
   }
 
   //buscar si nombre de permiso ya existe

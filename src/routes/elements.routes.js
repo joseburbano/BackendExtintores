@@ -17,21 +17,21 @@ module.exports = function ({ ElementsController }) {
 
   //agregar elementos nuevos
   router.post(
-    "/add-elements/:id",
+    "/add-element/:id",
     [AuthMiddleware],
     ElementsController.addElements,
   );
 
   //Eliminar Elementos
   router.delete(
-    "/delete-elements/:id",
+    "/delete-element/:id",
     [AuthMiddleware],
     ElementsController.deleteElements,
   );
 
   //Actualizar elemento
   router.put(
-    "/update-elements/:id",
+    "/update-element/:id",
     [AuthMiddleware],
     ElementsController.updateElements,
   );
@@ -44,7 +44,7 @@ module.exports = function ({ ElementsController }) {
   );
 
   //aca otenemos la imagen para enviar al fron del elementos
-  router.get("/get-foto/:fotoName", ElementsController.getPhoto);
+  router.get("/get-photo/:fotoName", ElementsController.getPhoto);
 
   //En listar todo los elementos
   router.get(
@@ -62,21 +62,21 @@ module.exports = function ({ ElementsController }) {
   //treser datos de sedes
   router.get(
     "/campus/:campus",
-    [AuthMiddleware],
+    [AuthMiddleware, ParseIntMiddleware],
     ElementsController.seeHeadquarters,
   );
 
   //treser datos de sede , bloque
   router.get(
     "/campus-block/:campus/:block",
-    [AuthMiddleware],
+    [AuthMiddleware, ParseIntMiddleware],
     ElementsController.queryBlock,
   );
 
   //treser datos de sede , bloque, piso
   router.get(
     "/campus-block-flat/:campus/:block/:flat",
-    [AuthMiddleware],
+    [AuthMiddleware, ParseIntMiddleware],
     ElementsController.consultFloor,
   );
 

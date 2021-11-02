@@ -95,13 +95,19 @@ class ElementsController {
   //Enviar todos los elementos
   async getElements(req, res) {
     const { pageSize, pageNum } = req.query;
-    await _elementsService.getElements(pageSize, pageNum).then((resul) => {
-      if (!resul) {
+    await _elementsService.getElements(pageSize, pageNum).then((element) => {
+      if (!element) {
         return res.json({ code: 401, message: "No item was found." });
       } else {
+        const result = element[1] / pageSize;
         return res.json({
           code: 200,
-          extintores: resul,
+          extintores: element[0],
+          total: {
+            totalPage: Math.round(result),
+            pageNum: element[3],
+            pageSize: element[2],
+          },
         });
       }
     });
@@ -145,16 +151,22 @@ class ElementsController {
     const { pageSize, pageNum } = req.query;
     await _elementsService
       .seeHeadquarters(campus, pageSize, pageNum)
-      .then((resul) => {
-        if (!resul) {
+      .then((element) => {
+        if (!element) {
           return res.json({
             code: 401,
             message: "No item was found at that site.",
           });
         } else {
+          const result = element[1] / pageSize;
           return res.json({
             code: 200,
-            sedes: resul,
+            extintores: element[0],
+            total: {
+              totalPage: Math.round(result),
+              pageNum: element[3],
+              pageSize: element[2],
+            },
           });
         }
       });
@@ -166,16 +178,22 @@ class ElementsController {
     const { pageSize, pageNum } = req.query;
     await _elementsService
       .queryBlock(campus, block, pageSize, pageNum)
-      .then((resul) => {
-        if (!resul) {
+      .then((element) => {
+        if (!element) {
           return res.json({
             code: 401,
             message: "No item was found in that block.",
           });
         } else {
+          const result = element[1] / pageSize;
           return res.json({
             code: 200,
-            bloques: resul,
+            extintores: element[0],
+            total: {
+              totalPage: Math.round(result),
+              pageNum: element[3],
+              pageSize: element[2],
+            },
           });
         }
       });
@@ -187,16 +205,22 @@ class ElementsController {
     const { pageSize, pageNum } = req.query;
     await _elementsService
       .consultFloor(campus, block, flat, pageSize, pageNum)
-      .then((resul) => {
-        if (!resul) {
+      .then((element) => {
+        if (!element) {
           return res.json({
             code: 401,
             message: "No items were found on that floor.",
           });
         } else {
+          const result = element[1] / pageSize;
           return res.json({
             code: 200,
-            pisos: resul,
+            extintores: element[0],
+            total: {
+              totalPage: Math.round(result),
+              pageNum: element[3],
+              pageSize: element[2],
+            },
           });
         }
       });
