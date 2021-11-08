@@ -28,6 +28,17 @@ class ParticipationRepository extends BaseRepository {
     return await _user.save(data).exec();
   }
 
+  //enviar un  registro de covid por busqueda por url
+  async getUrlParti(url) {
+    return await _participation
+      .findOne({ url: url })
+      .populate({
+        path: "user",
+        select: ["fullname", "tipo", "avatar", "cedula"],
+      })
+      .exec();
+  }
+
   //traer datos  por grupitos de a 10 de normativa de particiapacion
   async getAllParticipation(pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);

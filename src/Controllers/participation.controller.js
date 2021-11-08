@@ -127,17 +127,23 @@ class ParticipationController {
     const { pageSize, pageNum } = req.query;
     await _participationService
       .getParticipation(pageSize, pageNum)
-      .then((resul) => {
-        if (!resul) {
+      .then((parti) => {
+        if (!parti) {
           return res.json({
             code: 401,
             message:
               "Error when sending all the registers of participation regulations.",
           });
         } else {
+          const result = parti[1] / pageSize;
           return res.json({
             code: 200,
-            participaciones: resul,
+            participaciones: parti[0],
+            total: {
+              totalPage: Math.round(result),
+              pageNum: parti[3],
+              pageSize: parti[2],
+            },
           });
         }
       });
@@ -146,19 +152,19 @@ class ParticipationController {
   //Traer un solo registro de normativa de participacion
   async getCompetitor(req, res) {
     const { url } = req.params;
-    await _participationService.getCompetitor(url).then((resul) => {
-      if (!resul) {
+    await _participationService.getCompetitor(url).then((parti) => {
+      if (!parti) {
         return res.json({
           code: 401,
           message:
             "Error when sending the registers of participation regulations.",
         });
       } else {
-        const photo = result.avatar;
+        const { avatar } = parti;
         return res.json({
           code: 200,
-          participante: result,
-          avatar: photo,
+          participante: parti,
+          avatar: avatar,
         });
       }
     });
@@ -176,7 +182,7 @@ class ParticipationController {
       } else {
         return res.json({
           code: 200,
-          totalParti: result,
+          totalParti: resul,
         });
       }
     });
@@ -196,7 +202,7 @@ class ParticipationController {
       } else {
         return res.json({
           code: 200,
-          participacionUsers: result,
+          participacionUsers: resul,
         });
       }
     });
@@ -216,7 +222,7 @@ class ParticipationController {
       } else {
         return res.json({
           code: 200,
-          totalParti: result,
+          totalParti: resul,
         });
       }
     });

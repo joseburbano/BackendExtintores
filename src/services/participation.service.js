@@ -2,12 +2,15 @@ const BaseService = require("./base.service");
 const slug = require("slug");
 const fs = require("fs");
 const path = require("path");
+const shortid = require("shortid");
 
 let _participationRepository = null;
+let _userRepository = null;
 
 class ParticipationService extends BaseService {
-  constructor({ ParticipationRepository }) {
+  constructor({ ParticipationRepository, UserRepository }) {
     super(ParticipationRepository);
+    _userRepository = UserRepository;
     _participationRepository = ParticipationRepository;
   }
 
@@ -17,16 +20,12 @@ class ParticipationService extends BaseService {
     const url = slug(Urll).toLowerCase();
 
     dataPart.url = `${url}-${shortid.generate()}`;
-    const active = dataPart.active;
-    active = true;
-    dataPart.active = active;
-    const estado = dataPart.estado;
-    estado = false;
-    dataPart.estado = estado;
+    dataPart.active = true;
+    dataPart.estado = false;
 
-    const currentEntity = await _participationRepository.get(userId);
+    const currentEntity = await _userRepository.get(userId);
 
-    if (currentEntity) {
+    if (!currentEntity) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -37,7 +36,7 @@ class ParticipationService extends BaseService {
 
     dataPart.user = currentEntity;
 
-    if (dataPart.user) {
+    if (!dataPart.user) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -47,7 +46,7 @@ class ParticipationService extends BaseService {
 
     const currentSaveParti = await _participationRepository.create(dataPart);
 
-    if (currentEntity) {
+    if (!currentSaveParti) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -62,9 +61,16 @@ class ParticipationService extends BaseService {
 
   //eliminar registro de normativa de participacion
   async deleteParticipation(partiId) {
+    if (!partiId) {
+      const error = new Error();
+      error.code = 404;
+      error.status = 404;
+      error.message = "Id Necesary.";
+      throw error;
+    }
     const currentEntity = await _participationRepository.get(partiId);
 
-    if (currentEntity) {
+    if (!currentEntity) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -80,7 +86,7 @@ class ParticipationService extends BaseService {
       partiId,
     );
 
-    if (currentUpdate) {
+    if (!currentUpdate) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -94,7 +100,7 @@ class ParticipationService extends BaseService {
 
   //Actualizar registro de normativa de participacion
   async updateParticipation(partiData, id) {
-    if (partiData || id) {
+    if (!partiData || !id) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -149,8 +155,7 @@ class ParticipationService extends BaseService {
   //Enviar un foto al registro de normativa de participacion el del avatar el que lo reporto
   async getPhotoParticipationAvatar(avatarName) {
     const filePath = "./uploads/avatar/" + avatarName;
-
-    if (avatarName) {
+    if (!avatarName) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -167,15 +172,16 @@ class ParticipationService extends BaseService {
         throw error;
       }
     });
+    console.log(filePath);
 
     return await path.resolve(filePath);
   }
 
   //Enviar un foto al registro de normativa de participacion
   async getPhotoShare(fotoName) {
-    const filePath = "./uploads/NormativaImagen/" + fotoName;
+    const filePath = "./uploads/normativeImagen/" + fotoName;
 
-    if (fotoName) {
+    if (!fotoName) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -206,7 +212,7 @@ class ParticipationService extends BaseService {
 
   //enviar un solo registro de normativa de participacion
   async getCompetitor(url) {
-    if (url) {
+    if (!url) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -214,7 +220,7 @@ class ParticipationService extends BaseService {
       throw error;
     }
 
-    return await _participationRepository.getParticipation(url);
+    return await _participationRepository.getUrlParti(url);
   }
 
   //enviar todos los registro de normativa de participacion para exportar a excel
