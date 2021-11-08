@@ -52,10 +52,10 @@ class CovidController {
           message: "Error when searching data from the Covid health registry.",
         });
       } else {
-        const avatar = result.user.avatar;
+        const { user: avatar } = resul;
         return res.json({
           code: 200,
-          covi: result,
+          covi: resul,
           avatar: avatar,
         });
       }
@@ -95,18 +95,27 @@ class CovidController {
     });
   }
 
-  //Enviar un foto al registro de normativa de participacion el del avatar el que lo reporto
+  //Enviar registros de covid
   async getCovids(req, res) {
     const { pageSize, pageNum } = req.query;
-    await _covidService.getCovids(pageSize, pageNum).then((resul) => {
-      if (!resul) {
+    await _covidService.getCovids(pageSize, pageNum).then((covid) => {
+      if (!covid) {
         return res.json({
           code: 401,
           message:
             "Error when sending the image of the avatar that published registration of covid.",
         });
       } else {
-        return res.status(200).json({ code: 200, covis: resul });
+        const result = covid[1] / pageSize;
+        return res.status(200).json({
+          code: 200,
+          covis: covid[0],
+          total: {
+            totalPage: Math.round(result),
+            pageNum: covid[3],
+            pageSize: covid[2],
+          },
+        });
       }
     });
   }

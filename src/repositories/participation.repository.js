@@ -4,9 +4,9 @@ let _participation = null;
 let _user = null;
 
 class ParticipationRepository extends BaseRepository {
-  constructor({ Permissions, User }) {
-    super(Permissions, User);
-    _participation = Permissions;
+  constructor({ Participation, User }) {
+    super(Participation, User);
+    _participation = Participation;
     _user = User;
   }
 
@@ -31,14 +31,17 @@ class ParticipationRepository extends BaseRepository {
   //traer datos  por grupitos de a 10 de normativa de particiapacion
   async getAllParticipation(pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);
-    return await _participation
-      .find()
+    let doc = await _participation
+      .find({})
       .populate({
         path: "user",
         select: ["fullname", "tipo", "avatar", "cedula"],
       })
       .skip(skips)
       .limit(pageSize);
+    const elements = await _participation.countDocuments().exec();
+
+    return [doc, elements, pageSize, pageNum];
   }
 
   //traer un solo registro de normativa de particiapacion

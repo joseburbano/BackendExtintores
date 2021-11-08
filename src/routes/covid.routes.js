@@ -38,11 +38,7 @@ module.exports = function ({ CovidController }) {
   );
 
   //En listar todo los covids
-  router.get(
-    "/get-avatar-covids/:avatarName",
-    [AuthMiddleware],
-    CovidController.getAvatar,
-  );
+  router.get("/get-avatar-covids/:avatarName", CovidController.getAvatar);
 
   //En listar un solo dato covid por url
   router.get("/get-covid/:url", CovidController.getCovi);

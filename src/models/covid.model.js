@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
 
 const covidSchema = new Schema({
@@ -24,5 +23,5 @@ const covidSchema = new Schema({
   estado: Boolean,
   active: Boolean,
 });
-covidSchema.plugin(mongoosePaginate);
+
 module.exports = mongoose.model("covid", covidSchema);

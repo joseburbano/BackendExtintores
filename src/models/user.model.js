@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
 const { compareSync, hashSync, genSaltSync } = require("bcrypt");
 const Schema = mongoose.Schema;
 
@@ -84,8 +83,5 @@ usersSchema.pre("findOneAndUpdate", async function (next) {
   user.password = hashedPassword;
   next();
 });
-
-//metodo para aplicar paginate
-usersSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("user", usersSchema);

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
 
 const elementoSchema = new Schema({
@@ -37,5 +36,4 @@ const elementoSchema = new Schema({
   active: Boolean,
 });
 
-elementoSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("elemento", elementoSchema);

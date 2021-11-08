@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
 const Schema = mongoose.Schema;
 
 const participationSchema = new Schema({
@@ -23,5 +22,5 @@ const participationSchema = new Schema({
   estado: Boolean,
   active: Boolean,
 });
-participationSchema.plugin(mongoosePaginate);
+
 module.exports = mongoose.model("participacion", participationSchema);

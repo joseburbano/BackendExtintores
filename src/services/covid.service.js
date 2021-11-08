@@ -66,7 +66,7 @@ class CovidService extends BaseService {
 
   //eliminar un registro de covid
   async deleteCovid(id) {
-    if (id) {
+    if (!id) {
       const error = new Error();
       error.status = 404;
       error.message = "Error extracting the record id";
@@ -75,7 +75,7 @@ class CovidService extends BaseService {
 
     const currentCovid = await _covidRepository.get(id);
 
-    if (currentCovid) {
+    if (!currentCovid) {
       const error = new Error();
       error.status = 401;
       error.message = "Covid registry does not exist.";
@@ -87,7 +87,7 @@ class CovidService extends BaseService {
       currentCovid,
     );
 
-    if (currentUpdateUser) {
+    if (!currentUpdateUser) {
       const error = new Error();
       error.status = 401;
       error.message = "Error trying to update user and delete the record.";
@@ -99,13 +99,12 @@ class CovidService extends BaseService {
 
   //eliminar un registro de covid
   async getCovi(url) {
-    if (url) {
+    if (!url) {
       const error = new Error();
       error.status = 404;
       error.message = "Error extracting the record url";
       throw error;
     }
-
     return await _covidRepository.getCovi(url);
   }
 
@@ -118,7 +117,7 @@ class CovidService extends BaseService {
   async getAvatar(fotoName) {
     const filePath = "./uploads/avatar/" + fotoName;
 
-    if (fotoName) {
+    if (!fotoName) {
       const error = new Error();
       error.code = 404;
       error.status = 404;
@@ -136,7 +135,7 @@ class CovidService extends BaseService {
       }
     });
 
-    return await path.resolve(filePath);
+    return path.resolve(filePath);
   }
 
   //enviar todos los registro de covid

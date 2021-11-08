@@ -30,7 +30,7 @@ class CovidRepository extends BaseRepository {
   //enviar un  registro de covid por busqueda por url
   async getCovi(url) {
     return await _covid
-      .findOne({ url })
+      .findOne({ url: url })
       .populate({
         path: "user",
         select: ["fullname", "tipo", "avatar", "cedula"],
@@ -46,14 +46,19 @@ class CovidRepository extends BaseRepository {
   //traer datos  por grupitos de a 10 de normativa de particiapacion
   async getAllCovid(pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);
-    return await _covid
-      .find()
+    let doc = await _covid
+      .find({})
       .populate({
         path: "user",
         select: ["fullname", "tipo", "avatar", "cedula"],
       })
       .skip(skips)
-      .limit(pageSize);
+      .limit(pageSize)
+      .exec();
+
+    const elements = await _covid.countDocuments().exec();
+
+    return [doc, elements, pageSize, pageNum];
   }
 }
 
