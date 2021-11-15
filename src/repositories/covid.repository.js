@@ -17,7 +17,7 @@ class CovidRepository extends BaseRepository {
 
   //actualizar datos de usuario
   async covidUserUpdate(id, entity) {
-    return await _user.findByIdAndUpdate(id, entity, { new: true });
+    return await _user.findByIdAndUpdate(id, { covids: entity });
   }
 
   //actualizar datos de usuario para eliminar registro de covid

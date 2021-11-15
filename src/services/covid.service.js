@@ -13,22 +13,18 @@ class CovidService extends BaseService {
   }
 
   async addCovid(data, id) {
-    if (data) {
+    if (!data) {
       const error = new Error();
       error.status = 404;
       error.message = "The data could not be received correctly.";
       throw error;
     }
 
-    Url = data.diagnosticoCovid;
-    const url = slug(Url).toLowerCase();
+    const rrl = data.diagnosticoCovid;
+    const url = slug(rrl).toLowerCase();
     data.url = `${url}-${shortid.generate()}`;
-    active = data.active;
-    active = true;
-    data.active = active;
-    estado = data.estado;
-    estado = true;
-    data.estado = estado;
+    data.active = true;
+    data.estado = true;
 
     const currentEntityUser = await _covidRepository.getCovidUser(id);
 
@@ -58,10 +54,9 @@ class CovidService extends BaseService {
       throw error;
     }
 
-    return await _covidRepository.covidUserUpdate(
-      currentEntityUser._id,
-      currentEntityUser,
-    );
+    const { _id, covids } = currentEntityUser;
+
+    return await _covidRepository.covidUserUpdate(_id, covids);
   }
 
   //eliminar un registro de covid

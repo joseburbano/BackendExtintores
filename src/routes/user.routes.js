@@ -28,7 +28,7 @@ module.exports = function ({ UserController }) {
   );
 
   //datos usuarios
-  router.get("/:userId", [AuthMiddleware], UserController.get);
+  router.get("/:userId", UserController.get);
 
   //actualizar un usuario el avatar dos mildeware uno de autenticacion y el de fichero
   router.put(

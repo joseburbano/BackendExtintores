@@ -24,8 +24,8 @@ class ParticipationRepository extends BaseRepository {
   }
 
   //Agregar permiso en usuario
-  async createPartiUser(data) {
-    return await _user.save(data).exec();
+  async createPartiUser(id, data) {
+    return await _user.findByIdAndUpdate(id, { participas: data }).exec();
   }
 
   //enviar un  registro de covid por busqueda por url

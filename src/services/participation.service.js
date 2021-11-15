@@ -56,7 +56,9 @@ class ParticipationService extends BaseService {
 
     currentEntity.participas.push(currentSaveParti._id);
 
-    return await _participationRepository.createPartiUser(currentEntity);
+    const { _id, participas } = currentEntity;
+
+    return await _participationRepository.createPartiUser(_id, participas);
   }
 
   //eliminar registro de normativa de participacion

@@ -20,7 +20,7 @@ class AuthController {
     const creds = await _authService.signIn(body);
     return res.status(200).send({
       code: 200,
-      user: creds.user._id,
+      user: creds.user.id,
       rol: creds.user.rol,
       accessToken: creds.token,
       refreshToken: creds.token,
